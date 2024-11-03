@@ -56,6 +56,25 @@ class Storage(Credentials):
 
         self.storage = self.get_cliente()
 
+    def upload_streaming(
+        self,
+        data: Any,
+        bucket_name: str,
+        blob_name: str,
+        content_type: str = 'application/octet-stream'
+    ) -> Blob:
+        
+        bucket = self.storage.bucket(bucket_name)
+        blob = bucket.blob(blob_name)
+
+        blob.upload_from_file(
+            file_obj=data, 
+            content_type=content_type
+        )
+
+        return blob
+
+
     def upload_file(
         self,
         data: Any,

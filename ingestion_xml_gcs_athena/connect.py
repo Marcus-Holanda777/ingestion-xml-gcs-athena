@@ -1,12 +1,11 @@
 from contextlib import contextmanager
 import pyodbc
 from datetime import datetime
-
-from dotenv import load_dotenv
-import os
-
-
-load_dotenv()
+from ingestion_xml_gcs_athena import (
+    SERVER,
+    DATABASE,
+    QUERY
+)
 
 
 @contextmanager
@@ -43,13 +42,13 @@ def iter_notes(
 ):
     DRIVER = (
         'Driver={ODBC Driver 18 for Sql Server};'
-        f'Server={os.getenv('SERVER')};'
-        f'Database={os.getenv('DATABASE')};'
+        f'Server={SERVER};'
+        f'Database={DATABASE};'
         'TrustServerCertificate=Yes;'
         'Authentication=ActiveDirectoryIntegrated;'
     )
     
-    query = os.getenv('QUERY')
+    query = QUERY
     params = {
         'tips': ','.join(f'{c!r}' for c in tips),
         'start': start,
