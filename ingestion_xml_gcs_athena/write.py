@@ -21,7 +21,7 @@ class Write:
         self,
         key: str,
         compression: str= 'snappy'
-    ) -> None:
+    ) -> str:
         
         if isinstance(self.data, pd.DataFrame):
            self.data = pa.Table.from_pandas(self.data)
@@ -36,3 +36,5 @@ class Write:
             bucket_name=self.bucket_name,
             blob_name=out_key
         )
+
+        return out_key

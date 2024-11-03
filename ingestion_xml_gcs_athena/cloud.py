@@ -12,12 +12,6 @@ import os
 import json
 
 
-#GsClient = TypeVar(
-#    'GsClient', 
-#    Client
-#)
-
-
 class Credentials:
     def __init__(
         self,
@@ -74,7 +68,6 @@ class Storage(Credentials):
 
         return blob
 
-
     def upload_file(
         self,
         data: Any,
@@ -111,3 +104,14 @@ class Storage(Credentials):
         
         for blob in blobs:
             yield blob
+    
+    def get_blob_file(
+        self, 
+        bucket: Bucket | str,
+        blob_name,
+    ) -> Blob:
+        
+        if isinstance(bucket, str):
+           bucket = self.storage.get_bucket(bucket)
+        
+        return bucket.get_blob(blob_name)

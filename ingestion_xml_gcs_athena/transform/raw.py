@@ -41,11 +41,12 @@ def comand_raw(
         pos, data = datas
         file = FileXml(*data)
         file_to, file_bytes = file.export_file_xml()
+        
+        file_raw_to = f'{RAW_BUCKET}/{file_to}'
+        storage.upload_streaming(file_bytes, BUCKET_NAME, file_raw_to)
+        logger.info(f'File: {file_raw_to}, Pos: {pos}')
 
-        storage.upload_streaming(file_bytes, BUCKET_NAME, f'{RAW_BUCKET}/{file_to}')
-        logger.info(f'File: {file_to}, Pos: {pos}')
-
-        return file_to
+        return file_raw_to
     
     logging.info(f'Total list raw: {len(gen_notas)}')
     with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
