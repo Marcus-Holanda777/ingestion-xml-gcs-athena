@@ -20,3 +20,12 @@ resource "google_storage_bucket_iam_member" "bucket_access" {
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.bucket_account.email}"
 }
+
+resource "google_storage_bucket" "function_api" {
+  name          = "${var.bucket_name}-function"
+  location      = var.region
+  project       = var.project_id
+  force_destroy = true
+
+  public_access_prevention = "enforced"
+}

@@ -1,7 +1,6 @@
 __pycache__
 /__pycache__
 *.env
-main.py
 variables.tf
 *.json
 *.txt
