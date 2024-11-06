@@ -4,10 +4,9 @@ from deltalake import (
 )
 import pyarrow.parquet as pq
 import pyarrow.fs as fs
-from ingestion_xml_gcs_athena.schemas.notas import schema_nota
+from notas import schema_nota
 import os
 from datetime import timedelta
-from typing import Any
 
 
 class WriteDelta:
@@ -119,18 +118,3 @@ class WriteDelta:
         )
 
         return rst
-    
-    def delta_read(
-        self,
-        medallion: str = 'silver',
-        conds: Any = None
-    ) -> Any:
-        
-        table_uri = f"gs://{self.bucket_name}/{medallion}/{self.table_name}"
-        raw_fs, normalized_path = fs.FileSystem.from_uri(table_uri)
-        filesystem = fs.SubTreeFileSystem(normalized_path, raw_fs)
-
-        dt = DeltaTable(table_uri)
-        table = dt.to_pyarrow_dataset(filesystem=filesystem)
-        
-        return table.to_table(filter=conds)

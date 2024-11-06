@@ -4,12 +4,14 @@ from google.cloud.storage import (
     Bucket
 )
 from typing import (
-    TypeVar,
     Any, 
     Iterator
 )
 import os
 import json
+
+
+TIMEOUT_SECONDS = 360
 
 
 class Credentials:
@@ -55,7 +57,8 @@ class Storage(Credentials):
         data: Any,
         bucket_name: str,
         blob_name: str,
-        content_type: str = 'application/octet-stream'
+        content_type: str = 'application/octet-stream',
+        timeout: int = TIMEOUT_SECONDS
     ) -> Blob:
         
         bucket = self.storage.bucket(bucket_name)
@@ -63,7 +66,8 @@ class Storage(Credentials):
 
         blob.upload_from_file(
             file_obj=data, 
-            content_type=content_type
+            content_type=content_type,
+            timeout=timeout
         )
 
         return blob
@@ -73,7 +77,8 @@ class Storage(Credentials):
         data: Any,
         bucket_name: str,
         blob_name: str,
-        content_type: str = 'application/octet-stream'
+        content_type: str = 'application/octet-stream',
+        timeout: int = TIMEOUT_SECONDS
     ) -> Blob:
         
         bucket = self.storage.bucket(bucket_name)
@@ -81,7 +86,8 @@ class Storage(Credentials):
 
         blob.upload_from_string(
             data=data, 
-            content_type=content_type
+            content_type=content_type,
+            timeout=timeout
         )
 
         return blob
