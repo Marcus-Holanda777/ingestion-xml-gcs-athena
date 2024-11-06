@@ -30,7 +30,7 @@ resource "google_storage_bucket" "function_api_bronze" {
   location      = var.region
   project       = var.project_id
   force_destroy = true
-  
+
   storage_class            = "STANDARD"
   public_access_prevention = "enforced"
 
@@ -44,7 +44,21 @@ resource "google_storage_bucket" "function_api_silver" {
   location      = var.region
   project       = var.project_id
   force_destroy = true
-  
+
+  storage_class            = "STANDARD"
+  public_access_prevention = "enforced"
+
+  soft_delete_policy {
+    retention_duration_seconds = 0
+  }
+}
+
+resource "google_storage_bucket" "function_api_gold" {
+  name          = "${var.bucket_name}-function-gold"
+  location      = var.region
+  project       = var.project_id
+  force_destroy = true
+
   storage_class            = "STANDARD"
   public_access_prevention = "enforced"
 

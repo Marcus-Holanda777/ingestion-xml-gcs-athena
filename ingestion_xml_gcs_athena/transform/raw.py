@@ -7,7 +7,8 @@ from ingestion_xml_gcs_athena import (
     BUCKET_NAME,
     RAW_BUCKET,
     BRONZE_BUCKET,
-    LOTES_BUCKET
+    LOTES_BUCKET,
+    PERIOD_BUCKET
 )
 import os
 import logging
@@ -28,6 +29,29 @@ def export_lotes_json(list_raw: list[str]) -> None:
     
     data = {'data': [*map(mod_path, list_raw)]}
     blob_name = f'{LOTES_BUCKET}/{datetime.now():%Y%m%d_%H%M%S}.json'
+
+    st.upload_file(
+        json.dumps(data, indent=4),
+        bucket_name=BUCKET_NAME,
+        blob_name=blob_name,
+        content_type='application/json'
+    )
+
+    return blob_name
+
+
+def export_period_json(
+    start: datetime, 
+    end: datetime
+) -> None:
+    
+    st = Storage()
+    
+    data = {
+        'start': f'{start:%Y-%m-%d %H:%M:%S}', 
+        'end': f'{end:%Y-%m-%d %H:%M:%S}'
+    }
+    blob_name = f'{PERIOD_BUCKET}/{datetime.now():%Y%m%d_%H%M%S}.json'
 
     st.upload_file(
         json.dumps(data, indent=4),
@@ -74,6 +98,7 @@ def comand_raw(
         return file_raw_to
     
     logging.info(f'Total list raw: {len(gen_notas)}')
+    is_period = True if gen_notas else False
 
     gen_notas = iter(gen_notas)
     with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
@@ -85,3 +110,9 @@ def comand_raw(
             json_to = export_lotes_json(list_raw)
             logger.info(f'Export json: {datetime.now()}, {json_to=}, sleep 60 seconds ...')
             sleep(60.0)
+    
+    if is_period:
+        logger.info(f'PERIOD json: {datetime.now()}, sleep 60 seconds ...')
+        sleep(60.0)
+        json_period = export_period_json(start, end)
+        logger.info(f'Export PERIOD json: {datetime.now()}, {json_period=}')

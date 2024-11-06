@@ -11,7 +11,7 @@ logging.basicConfig(
 
 if __name__ == '__main__':
     comand_raw(
-        start=datetime(2024, 7, 1),
-        end=datetime(2024, 10, 31),
+        start=datetime(2024, 5, 1),
+        end=datetime(2024, 5, 31),
         notes=['INCINERACAO', 'ESTORNO-INCINERACAO']
     )
