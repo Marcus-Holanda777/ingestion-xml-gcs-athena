@@ -1,6 +1,6 @@
 # Projeto de Exportação e Transformação de Dados de Nota Fiscal
 
-Este projeto automatiza o processo de exportação e transformação de dados de XML de notas fiscais para análise no AWS Athena. Toda a infraestrutura do Google Cloud Platform é provisionada com **Terraform**, e o pipeline de dados é implementado em **Python** utilizando as bibliotecas `pyodbc`, `deltalake`, `pandas`, `pyarrow`, `duckdb`, e uma biblioteca própria chamada `athena-mvsh`.
+Este projeto automatiza o processo de exportação e transformação de dados de XML de notas fiscais para análise no AWS Athena. Toda a infraestrutura do Google Cloud Platform é provisionada com **Terraform**, e o pipeline de dados é implementado em **Python** utilizando as bibliotecas `pyodbc`, `deltalake`, `pandas`, `pyarrow`, `duckdb`, e uma biblioteca própria chamada [athena-mvsh](https://pypi.org/project/athena-mvsh/) .
 
 ![Arquitetura do projeto](img/cloud.png)
 
@@ -20,7 +20,7 @@ Este projeto automatiza o processo de exportação e transformação de dados de
 
 4. **Exportação para Athena (AWS)**
    - **Objetivo**: Disponibilizar os dados para consulta no AWS Athena em uma tabela Iceberg.
-   - **Processo**: Usando `pyarrow` e `duckdb`, o Delta Lake da camada silver, também através de uma Google Cloud Function é convertido para o formato compatível com Iceberg e transferido para o Athena, onde pode ser consultado diretamente. A biblioteca `athena-mvsh` simplifica as operações de consulta e manipulação no Athena.
+   - **Processo**: Usando `pyarrow` e `duckdb`, o Delta Lake da camada silver, também através de uma Google Cloud Function é convertido para o formato compatível com Iceberg e transferido para o Athena, onde pode ser consultado diretamente. A biblioteca [athena-mvsh](https://pypi.org/project/athena-mvsh/) simplifica as operações de consulta e manipulação no Athena.
 
 ## Estrutura de pastas pro Google Cloud Function
 
