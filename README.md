@@ -46,3 +46,11 @@ terraform fmt
 terraform validate
 terraform apply -auto-approve
 ```
+
+## Conclusão
+
+Este projeto oferece uma oportunidade valiosa para estudar e praticar conceitos fundamentais em engenharia de dados, como ingestão, transformação e organização de dados em camadas. Ao implementar um pipeline com Google Cloud Functions, armazenamento em camadas no Google Cloud Storage e integração com AWS Athena, foi possível explorar o uso de tecnologias modernas e de boas práticas para o processamento de dados em escala.
+
+Com a ajuda de **Terraform** para provisionamento da infraestrutura, o projeto também proporciona experiência prática com a gestão e automação de recursos em nuvem, algo essencial para profissionais de dados. A biblioteca **Python** `athena-mvsh`(https://pypi.org/project/athena-mvsh/) que é de minha autoria, facilita a interação com os recursos do AWS Athena.
+
+Este projeto, além de fortalecer o conhecimento em ferramentas e tecnologias de dados, também oferece uma visão prática sobre os desafios e soluções na engenharia de dados moderna.
